@@ -103,7 +103,6 @@ set clipboard=unnamed
 
 " let clangd fully control code completion
 let g:ycm_clangd_uses_ycmd_caching = 0
-
 let g:ycm_clangd_binary_path = exepath("clangd")
 
 let g:ycm_python_interpreter_path = '/usr/bin/python'
@@ -113,6 +112,22 @@ let g:ycm_extra_conf_vim_data = [
   \ 'g:ycm_python_sys_path'
   \]
 let g:ycm_global_ycm_extra_conf = '~/global_extra_conf.py'
+
+" close youcompleteme docs window after selection.  obviously.
+let g:ycm_autoclose_preview_window_after_completion=1
+
+let g:ycm_enable_diagnostic_signs=1
+
+" YCM Shortcuts
+nnoremap <Leader>gl :YcmCompleter GoToDeclaration<CR>
+nnoremap <Leader>gf :YcmCompleter GoToDefinition<CR>
+nnoremap <Leader>gr :YcmCompleter GoToDefinition<CR>
+nnoremap <Leader>gt :YcmCompleter GetType<CR>
+nnoremap <Leader>gd :YcmCompleter GetDoc<CR>
+nnoremap <Leader>rr :YcmCompleter RefactorRename<space>
+nnoremap <Leader>ft :YcmCompleter Format<CR>
+nnoremap <Leader>fx :YcmCompleter FixIt<CR>
+
 
 
 
@@ -181,12 +196,18 @@ let g:gitgutter_realtime = 0
 
 
 " Use a leader instead of the actual named binding
-nmap <leader>p :CtrlP<cr>
+" nmap <leader>p :CtrlP<cr>
 
 " Easy bindings for its various modes
-nmap <leader>bb :CtrlPBuffer<cr>
-nmap <leader>bm :CtrlPMixed<cr>
-nmap <leader>bs :CtrlPMRU<cr>
+" nmap <leader>bb :CtrlPBuffer<cr>
+" nmap <leader>bm :CtrlPMixed<cr>
+" nmap <leader>bs :CtrlPMRU<cr>
+
+
+let g:fzf_buffers_jump = 1
+nnoremap <silent> <Leader>b :Buffers<Cr>
+nnoremap <silent> <Leader>g :GFiles?
+nnoremap <silent> <Leader>m :Marks<Cr>
 
 
 " tab to move through buffers - shift+tab to go back
@@ -200,7 +221,6 @@ hi Directory guifg=#ffff87 ctermfg=228
 hi CursorLineNr guifg=#050505
 
 " set tab colors
-
 hi TabLineSel ctermfg=red ctermbg=black
 hi Title ctermfg=LightBlue ctermbg=none
 
@@ -211,7 +231,7 @@ hi VertSplit ctermfg=black ctermbg=black
 set fillchars=stl:-,stlnc:-,vert:\|
 
 " Popup menu
-hi Pmenu ctermfg=red ctermbg=black
+hi Pmenu ctermfg=blue ctermbg=black
 hi PmenuSbar ctermfg=lightblue ctermbg=black
 hi PmenuThumb ctermfg=red ctermbg=black
 hi PmenuSel ctermfg=lightblue ctermbg=darkgray
@@ -253,11 +273,12 @@ let g:ackprg = 'ag --nogroup --nocolor --column'
 
 
 
-" close youcompleteme docs window after selection.  obviously.
-" let g:ycm_autoclose_preview_window_after_completion=1
+
 
 nnoremap <C-p> :Files<Cr>
 
+command! -bang -nargs=? -complete=dir Files
+    \ call fzf#vim#files(<q-args>, {'options': ['--layout=reverse', '--info=inline', '--preview', '~/.vim/bundle/fzf.vim/bin/preview.sh {}']}, <bang>0)
 
 
 syntax on
