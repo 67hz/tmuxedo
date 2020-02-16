@@ -13,7 +13,9 @@ Plugin 'gmarik/Vundle.vim'
 " -------
 
 " Navigation
-Plugin 'kien/ctrlp.vim'
+Plugin 'junegunn/fzf'
+Plugin 'junegunn/fzf.vim'
+" Plugin 'kien/ctrlp.vim'
 "Plugin 'mileszs/ack.vim'
 Plugin 'rking/ag.vim'
 Plugin 'craigemery/vim-autotag'
@@ -37,26 +39,19 @@ Plugin 'whatyouhide/vim-gotham'
 " Plugin 'tpope/vim-fugitive'
 Plugin 'tomtom/tcomment_vim'
 Plugin 'tpope/vim-surround'
-" Plugin 'mattn/emmet-vim'
 Plugin 'tpope/vim-obsession'
 
 " Automatic Helpers
 " Plugin 'xolox/vim-session'
-Plugin 'scrooloose/syntastic'
-" Plugin 'mtscout6/syntastic-local-eslint.vim'
+" Plugin 'scrooloose/syntastic'
 " Plugin 'Valloric/MatchTagAlways'
-" Plugin 'Quramy/vim-js-pretty-template'
-" Plugin 'jason0x43/vim-js-indent'
 
-
-" run npm install in plugin dir if reinstalling
-" Plugin 'ternjs/tern_for_vim'
 
 "" Autocompletion
-Plugin 'Shougo/neocomplete'
-Plugin 'Shougo/neosnippet'
-Plugin 'Shougo/neosnippet-snippets'
-Bundle 'honza/vim-snippets'
+" Plugin 'Shougo/neocomplete'
+" Plugin 'Shougo/neosnippet'
+" Plugin 'Shougo/neosnippet-snippets'
+" Bundle 'honza/vim-snippets'
 
 Bundle 'MarcWeber/vim-addon-mw-utils'
 Bundle 'tomtom/tlib_vim'
@@ -64,20 +59,10 @@ Bundle 'tomtom/tlib_vim'
 
 " Language Additions
 Plugin 'shirk/vim-gas'
-Plugin 'justmao945/vim-clang'
-" Plugin 'posva/vim-vue'
-Plugin 'sheerun/vim-polyglot'
-" Plugin 'elixir-lang/vim-elixir'
-" Plugin 'pangloss/vim-javascript'
-" Plugin 'othree/yajs.vim' " if this slows performance, use jelera instead
-" Plugin 'jelera/vim-javascript-syntax'
-" Plugin 'othree/javascript-libraries-syntax.vim'
-" Plugin 'isRuslan/vim-es6'
+Plugin 'ycm-core/YouCompleteMe'
+" Plugin 'justmao945/vim-clang'
+" Plugin 'sheerun/vim-polyglot'
 Plugin 'leshill/vim-json'
-" Plugin 'leafgarland/typescript-vim'
-" Disable below if perf is slowed
-" Plugin 'Quramy/tsuquyomi' 
-" Plugin 'fatih/vim-go'
 " Plugin 'chrisbra/Colorizer'
 
 Plugin 'dansomething/vim-eclim'
@@ -86,19 +71,10 @@ Plugin 'dansomething/vim-eclim'
 " Plugin 'sudar/vim-arduino-syntax'
 " Bundle 'sudar/vim-arduino-snippets'
 
-"   HTML
-Plugin 'nono/vim-handlebars'
-Plugin 'othree/html5.vim'
-Plugin 'indenthtml.vim'
-
-" Misc Languages
 " Plugin 'msanders/cocoa.vim'
 Plugin 'mutewinter/nginx.vim'
-" Plugin 'hail2u/vim-css3-syntax'
 Plugin 'mutewinter/vim-tmux'
 " Plugin 'plasticboy/vim-markdown'
-" Plugin 'groenewege/vim-less'
-" Plugin 'wavded/vim-stylus'
 Plugin 'JamshedVesuna/vim-markdown-preview'
 
 " MatchIt
@@ -123,6 +99,22 @@ set t_Co=256
 set mouse=a
 set laststatus=2
 set clipboard=unnamed
+
+
+" let clangd fully control code completion
+let g:ycm_clangd_uses_ycmd_caching = 0
+
+let g:ycm_clangd_binary_path = exepath("clangd")
+
+let g:ycm_python_interpreter_path = '/usr/bin/python'
+let g:ycm_python_sys_path = ['system']
+let g:ycm_extra_conf_vim_data = [
+  \ 'g:ycm_python_interpreter_path',
+  \ 'g:ycm_python_sys_path'
+  \]
+let g:ycm_global_ycm_extra_conf = '~/global_extra_conf.py'
+
+
 
 
 " commenting below, the default '\' works well with my ergodox - get one
@@ -173,15 +165,15 @@ set wildignore+=*/tmp/*,*.so,*.swp,*.zip
 
 """ CTRLP
 " Setup some default ignores
-let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\v[\/](\.(git|hg|svn|DS_STORE|node_modules|dist)|\_site)$',
-  \ 'file': '\v\.(exe|so|dll|class|png|jpg|jpeg)$',
-\}
+" let g:ctrlp_custom_ignore = {
+"   \ 'dir':  '\v[\/](\.(git|hg|svn|DS_STORE|node_modules|dist)|\_site)$',
+"   \ 'file': '\v\.(exe|so|dll|class|png|jpg|jpeg)$',
+" \}
 
 " Use the nearest .git directory as the cwd
 " This makes a lot of sense if you are working on a project that is in version
 " control. It also supports .svn, .hg, .bzr.
-let g:ctrlp_working_path_mode = 'r'
+" let g:ctrlp_working_path_mode = 'r'
 
 " only check a file when loaded or saved
 let g:gitgutter_eager = 0
@@ -231,32 +223,18 @@ hi Folded ctermbg=black ctermfg=lightblue
 " set autoindent
 filetype plugin indent on
 
-set omnifunc=syntaxcomplete#Complete
-
 let vim_markdown_preview_toggle=1
 let vim_markdown_preview_github=1
 let vim_markdown_preview_hotkey='<C-m>'
 
 let g:vim_markdown_folding_disabled=1 " Markdown
 
-" enable jsdoc syntax highlighting from vim-javascript
-let g:javascript_plugin_jsdoc = 1
 set foldmethod=indent " or syntax
 
 " allow custom theming for vim-indent-guides
 let g:indent_guides_auto_colors = 0
 
-" ignore angular directives in syntastic
-" let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute"]
-" let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute \"ng-","proprietary attribute \"eb-","proprietary attribute \"action"]
-let g:syntastic_javascript_checkers = ['eslint']
 
-" integrate with TypeScript
-let g:tsuquyomi_disable_quickfix = 1
-let g:syntastic_typescript_checkers = ['tsuquyomi']
-
-" show linting errors immediately
-let g:syntastic_check_on_open = 1
 
 "swap ack for ag
 let g:ackprg = 'ag --nogroup --nocolor --column'
@@ -275,94 +253,11 @@ let g:ackprg = 'ag --nogroup --nocolor --column'
 
 
 
-" javascript-libraries-syntax explicit library adds
-let g:used_javascript_libs = 'underscore,jquery,react,flux,requirejs,chai,handlebars,vue,d3'
-
 " close youcompleteme docs window after selection.  obviously.
 " let g:ycm_autoclose_preview_window_after_completion=1
 
-"==============================================================================
-"neocomplete
-" Disable AutoComplPop
-let g:acp_enableAtStartup = 0
-" Use neocomplete.
-let g:neocomplete#enable_at_startup = 0
-" Use smartcase.
-let g:neocomplete#enable_smart_case = 1
-" Set minimum syntax keyword length.
-let g:neocomplete#sources#syntax#min_keyword_length = 3
-" let g:neocomplete#enable_refresh_always = 1
+nnoremap <C-p> :Files<Cr>
 
-" uncomment to close on select: 0 by default
-" let g:neocomplete#enable_auto_close_preview = 1
-
-" Plugin key-mappings.
-inoremap <expr><C-g>     neocomplete#undo_completion()
-inoremap <expr><C-l>     neocomplete#complete_common_string()
-
-" <CR>: close popup and save indent.
-inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-function! s:my_cr_function()
-  return (pumvisible() ? "\<C-y>" : "" ) . "\<CR>"
-  " For no inserting <CR> key.
-  "return pumvisible() ? "\<C-y>" : "\<CR>"
-endfunction
-
-" <TAB>: completion.
-inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-inoremap <expr><s-TAB>  pumvisible() ? "\<C-p>" : "\<TAB>"
-
-" <C-h>, <BS>: close popup and delete backword char.
-inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
-inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
-" Close popup by <Space>.
-"inoremap <expr><Space> pumvisible() ? "\<C-y>" : "\<Space>"
-
-" Enable omni completion.
-autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-
-" Enable heavy omni completion.
-if !exists('g:neocomplete#sources#omni#input_patterns')
-  let g:neocomplete#sources#omni#input_patterns = {}
-endif
-
-" Enable snipMate compatibility feature.
-let g:neosnippet#enable_snipmate_compatibility = 0
-
-" Tell Neosnippet about the other snippets
-let g:neosnippet#snippets_directory='~/.vim/bundle/vim-snippets/snippets'
-"==============================================================================
-
-
-"==============================================================================
-"neo-snippet====================================================================
-
-" Plugin key-mappings.
-" C-n and C-p to select snippets
-" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
-imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-smap <C-k>     <Plug>(neosnippet_expand_or_jump)
-xmap <C-k>     <Plug>(neosnippet_expand_target)
-
-" SuperTab like snippets behavior.
-" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
-imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-"imap <expr><TAB>
-" \ pumvisible() ? "\<C-n>" :
-" \ neosnippet#expandable_or_jumpable() ?
-" \    "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-\ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-
-" For conceal markers.
-if has('conceal')
-  set conceallevel=2 concealcursor=niv
-endif
-"==============================================================================
 
 
 syntax on
@@ -381,9 +276,9 @@ set undodir=~/.vim/undo//
 " toggle paste mode
 set pastetoggle=<F3>
 
-let g:clang_cpp_options = '-std=c++14'
-let g:clang_auto = 1
-:nnoremap <F12> :ClangSyntaxCheck<CR>
+" let g:clang_cpp_options = '-std=c++14'
+" let g:clang_auto = 1
+" :nnoremap <F12> :ClangSyntaxCheck<CR>
 
 
 
