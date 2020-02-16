@@ -47,11 +47,6 @@ Plugin 'tpope/vim-obsession'
 " Plugin 'Valloric/MatchTagAlways'
 
 
-"" Autocompletion
-" Plugin 'Shougo/neocomplete'
-" Plugin 'Shougo/neosnippet'
-" Plugin 'Shougo/neosnippet-snippets'
-" Bundle 'honza/vim-snippets'
 
 Bundle 'MarcWeber/vim-addon-mw-utils'
 Bundle 'tomtom/tlib_vim'
