@@ -46,10 +46,17 @@ Plugin 'tpope/vim-obsession'
 " Plugin 'scrooloose/syntastic'
 " Plugin 'Valloric/MatchTagAlways'
 
+" Snippets
+" Plugin 'MarcWeber/vim-addon-mw-utils'
+" Plugin 'tomtom/tlib_vim'
+" Plugin 'garbas/vim-snipmate'
+Plugin 'SirVer/ultisnips'
+
+" Optional:
+Plugin 'honza/vim-snippets'
+" Bundle 'sudar/vim-arduino-snippets'
 
 
-Bundle 'MarcWeber/vim-addon-mw-utils'
-Bundle 'tomtom/tlib_vim'
 
 
 " Language Additions
@@ -58,18 +65,21 @@ Plugin 'ycm-core/YouCompleteMe'
 " Plugin 'justmao945/vim-clang'
 " Plugin 'sheerun/vim-polyglot'
 Plugin 'leshill/vim-json'
-" Plugin 'chrisbra/Colorizer'
 
 Plugin 'dansomething/vim-eclim'
 
 " Plugin 'jplaut/vim-arduino-ino'
 " Plugin 'sudar/vim-arduino-syntax'
-" Bundle 'sudar/vim-arduino-snippets'
+
+
+" Syntax
+Plugin 'octol/vim-cpp-enhanced-highlight'
+
 
 " Plugin 'msanders/cocoa.vim'
 Plugin 'mutewinter/nginx.vim'
 Plugin 'mutewinter/vim-tmux'
-" Plugin 'plasticboy/vim-markdown'
+Plugin 'plasticboy/vim-markdown'
 Plugin 'JamshedVesuna/vim-markdown-preview'
 
 " MatchIt
@@ -85,9 +95,10 @@ Plugin 'xolox/vim-misc'
 
 call vundle#end()
 
-colorscheme dobro
+colorscheme cobra
 
-" set shortmess=I                        " Don't show the intro message on startup
+" Don't show the intro message on startup
+" set shortmess=I                        
 
 set background=dark
 set t_Co=256
@@ -124,11 +135,7 @@ nnoremap <Leader>ft :YcmCompleter Format<CR>
 nnoremap <Leader>fx :YcmCompleter FixIt<CR>
 
 
-
-
-
-" commenting below, the default '\' works well with my ergodox - get one
-" if you don't have one, then comma is much easier so uncomment
+" enable for ergodox
 "c let mapleader=','
 
 " set line guide at 80
@@ -144,22 +151,20 @@ set lazyredraw
 set backspace=2
 
 " ctrl+n toggles netrw
-map <C-n> :NERDTreeToggle<CR>
+noremap <C-n> :NERDTreeToggle<CR>
 
 " ctrl+u toggles undotree
-map <C-u> :UndotreeToggle<CR>
+noremap <C-u> :UndotreeToggle<CR>
 
 " ctrl+t toggles tagbar
-map <C-t> :TagbarToggle<CR>
+noremap <C-t> :TagbarToggle<CR>
 
 " Clipboard: F1 copies, F2 pastes
-nmap <F1> :.w !pbcopy<CR><CR>
-vmap <F1> :w !pbcopy<CR><CR>
-nmap <F2> :set paste<CR>:r !pbpaste<CR>:set nopaste<CR>
-imap <F2> <Esc>:set paste<CR>:r !pbpaste<CR>:set nopaste<CR>
+noremap <F1> :.w !pbcopy<CR><CR>
+vnoremap <F1> :w !pbcopy<CR><CR>
+noremap <F2> :set paste<CR>:r !pbpaste<CR>:set nopaste<CR>
+inoremap <F2> <Esc>:set paste<CR>:r !pbpaste<CR>:set nopaste<CR>
 
-"jk to exit insert mode - removing this to undo bad habits - must caps escape
-" imap jk <Esc>
 
 """ AIRLINE AND BUFFERS
 " Enable the list of buffers
@@ -170,33 +175,22 @@ let g:airline#extensions#tabline#fnamemod = ':t'
 
 let g:airline_theme="distinguished"
 
-" Ignore these files
+" Ignore these fil
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip 
 
-""" CTRLP
-" Setup some default ignores
-" let g:ctrlp_custom_ignore = {
-"   \ 'dir':  '\v[\/](\.(git|hg|svn|DS_STORE|node_modules|dist)|\_site)$',
-"   \ 'file': '\v\.(exe|so|dll|class|png|jpg|jpeg)$',
-" \}
-
-" Use the nearest .git directory as the cwd
-" This makes a lot of sense if you are working on a project that is in version
-" control. It also supports .svn, .hg, .bzr.
-" let g:ctrlp_working_path_mode = 'r'
 
 " only check a file when loaded or saved
 let g:gitgutter_eager = 0
 let g:gitgutter_realtime = 0
 
+" Snipmate remap for insert and select
+" :imap <C-J> <esc>a<Plug>snipMateNextOrTrigger
+" :smap <C-J> <Plug>snipMateNextOrTrigger
 
-" Use a leader instead of the actual named binding
-" nmap <leader>p :CtrlP<cr>
-
-" Easy bindings for its various modes
-" nmap <leader>bb :CtrlPBuffer<cr>
-" nmap <leader>bm :CtrlPMixed<cr>
-" nmap <leader>bs :CtrlPMRU<cr>
+" Ultisnips
+let g:UltiSnipsExpandTrigger="<c-j>"
+let g:UltiSnipsJumpForwardTrigger="<c-l>"
+let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 
 
 let g:fzf_buffers_jump = 1
@@ -209,30 +203,7 @@ nnoremap <silent> <Leader>m :Marks<Cr>
 nnoremap  <silent>   <tab>  :if &modifiable && !&readonly && &modified <CR> :write<CR> :endif<CR>:bnext<CR>
 nnoremap  <silent> <s-tab>  :if &modifiable && !&readonly && &modified <CR> :write<CR> :endif<CR>:bprevious<CR>
 
-" was 202 for burnt oj
-hi Directory guifg=#ffff87 ctermfg=228
 
-" line number
-hi CursorLineNr guifg=#050505
-
-" set tab colors
-hi TabLineSel ctermfg=red ctermbg=black
-hi Title ctermfg=LightBlue ctermbg=none
-
-" status line
-hi StatusLine ctermfg=black ctermbg=black
-hi StatusLineNC ctermfg=black ctermbg=black
-hi VertSplit ctermfg=black ctermbg=black
-set fillchars=stl:-,stlnc:-,vert:\|
-
-" Popup menu
-hi Pmenu ctermfg=blue ctermbg=black
-hi PmenuSbar ctermfg=lightblue ctermbg=black
-hi PmenuThumb ctermfg=red ctermbg=black
-hi PmenuSel ctermfg=lightblue ctermbg=darkgray
-
-" Code Folding
-hi Folded ctermbg=black ctermfg=lightblue
 
 
 " set autoindent
@@ -244,7 +215,7 @@ let vim_markdown_preview_hotkey='<C-m>'
 
 let g:vim_markdown_folding_disabled=1 " Markdown
 
-set foldmethod=indent " or syntax
+set foldmethod=indent
 
 " allow custom theming for vim-indent-guides
 let g:indent_guides_auto_colors = 0
@@ -270,10 +241,17 @@ let g:ackprg = 'ag --nogroup --nocolor --column'
 
 
 
+" FZF
 nnoremap <C-p> :Files<Cr>
 
+" FZF add preview window
 command! -bang -nargs=? -complete=dir Files
     \ call fzf#vim#files(<q-args>, {'options': ['--layout=reverse', '--info=inline', '--preview', '~/.vim/bundle/fzf.vim/bin/preview.sh {}']}, <bang>0)
+
+
+" generic helpers
+:inoremap <c-d> <esc> ddi
+
 
 
 syntax on
@@ -282,7 +260,7 @@ set number
 
 set tabstop=2
 set shiftwidth=2
-set expandtab
+set expandtab " spaces for tabs
 
 " Backup Files
 set backupdir=~/.vim/backup//
@@ -301,13 +279,25 @@ set pastetoggle=<F3>
 " Close Vi if Nerdtree is the only window left open
 " autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
-" get better highlighting for json files
-autocmd BufNewFile,BufRead *.json set ft=javascript
 
-"vim-easy-align
-" imap ga     <Plug>(EasyAlign)
-" smap ga     <Plug>(EasyAlign)
-" xmap ga     <Plug>(EasyAlign)
+augroup filetype_cpp
+    :autocmd FileType cpp nnoremap <buffer> <localleader>c I//<esc>
+    :autocmd FileType cpp vnoremap <buffer> <localleader>c I/*<space><esc><s-a><space>*/
+
+    :autocmd FileType c nnoremap <buffer> <localleader>c I//<esc>
+    :autocmd FileType c nnoremap <buffer> <localleader>c I/*<space><esc><s-a><space>*/
+
+augroup end
+
+" get better highlighting for json files
+augroup filetype_json
+    autocmd BufNewFile,BufRead *.json set ft=javascript
+augroup END
+
+:nnoremap <leader>sv :source $MYVIMRC<cr>
+:nnoremap <leader>ev :vsplit $MYVIMRC<cr> <c-w><c-r>
+
+:iabbrev @@ aaron@avenue6creative.com
 
 
 "watch and auto-reload .vimrc when it changes
