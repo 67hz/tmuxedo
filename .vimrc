@@ -1,4 +1,4 @@
-set nocompatible  " be iMproved, required
+set nocompatible  " be iMproved, requiredojkjkj
 filetype off
 
 " set the runtime path to include Vundle and initialize
@@ -15,11 +15,6 @@ Plugin 'gmarik/Vundle.vim'
 " Navigation
 Plugin 'junegunn/fzf'
 Plugin 'junegunn/fzf.vim'
-" Plugin 'kien/ctrlp.vim'
-"Plugin 'mileszs/ack.vim'
-Plugin 'rking/ag.vim'
-Plugin 'craigemery/vim-autotag'
-" Bundle 'jlanzarotta/bufexplorer' // starting to prefer ctrlP's buffer view
 
 " UI Stuff
 Plugin 'airblade/vim-gitgutter'
@@ -33,7 +28,6 @@ Plugin 'jszakmeister/vim-togglecursor'
 Plugin 'majutsushi/tagbar'
 Plugin 'benjaminwhite/Benokai'
 Plugin 'whatyouhide/vim-gotham'
-" Plugin 'junegunn/vim-easy-align'
 
 " Commands
 " Plugin 'tpope/vim-fugitive'
@@ -43,13 +37,9 @@ Plugin 'tpope/vim-obsession'
 
 " Automatic Helpers
 " Plugin 'xolox/vim-session'
-" Plugin 'scrooloose/syntastic'
-" Plugin 'Valloric/MatchTagAlways'
+" Plugin 'Raimondi/delimitMate'
 
 " Snippets
-" Plugin 'MarcWeber/vim-addon-mw-utils'
-" Plugin 'tomtom/tlib_vim'
-" Plugin 'garbas/vim-snipmate'
 Plugin 'SirVer/ultisnips'
 
 " Optional:
@@ -124,6 +114,9 @@ let g:ycm_autoclose_preview_window_after_completion=1
 
 let g:ycm_enable_diagnostic_signs=1
 
+" collect identifiers from whole project instead of visited files only
+let g:ycm_collect_identifiers_from_tags_files = 1
+
 " YCM Shortcuts
 nnoremap <Leader>gl :YcmCompleter GoToDeclaration<CR>
 nnoremap <Leader>gf :YcmCompleter GoToDefinition<CR>
@@ -195,8 +188,9 @@ let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 
 let g:fzf_buffers_jump = 1
 nnoremap <silent> <Leader>b :Buffers<Cr>
-nnoremap <silent> <Leader>g :GFiles?
+nnoremap <silent> <Leader>g :GFiles?<Cr>
 nnoremap <silent> <Leader>m :Marks<Cr>
+nnoremap <silent> <Leader>t :Tags<Cr>
 
 
 " tab to move through buffers - shift+tab to go back
@@ -222,8 +216,6 @@ let g:indent_guides_auto_colors = 0
 
 
 
-"swap ack for ag
-let g:ackprg = 'ag --nogroup --nocolor --column'
 
 " customize netrw
 " let g:netrw_banner=0
@@ -241,7 +233,7 @@ let g:ackprg = 'ag --nogroup --nocolor --column'
 
 
 
-" FZF
+" jZF
 nnoremap <C-p> :Files<Cr>
 
 " FZF add preview window
@@ -273,6 +265,10 @@ set pastetoggle=<F3>
 " let g:clang_cpp_options = '-std=c++14'
 " let g:clang_auto = 1
 " :nnoremap <F12> :ClangSyntaxCheck<CR>
+"
+
+
+let g:fzf_tags_command = 'ctags -R -f'
 
 
 
@@ -281,10 +277,10 @@ set pastetoggle=<F3>
 
 
 augroup filetype_cpp
-    :autocmd FileType cpp nnoremap <buffer> <localleader>c I//<esc>
+    :autocmd FileType cpp nnoremap <buffer> <localleader>c I//<space><esc>
     :autocmd FileType cpp vnoremap <buffer> <localleader>c I/*<space><esc><s-a><space>*/
 
-    :autocmd FileType c nnoremap <buffer> <localleader>c I//<esc>
+    :autocmd FileType c nnoremap <buffer> <localleader>c I//<space><esc>
     :autocmd FileType c nnoremap <buffer> <localleader>c I/*<space><esc><s-a><space>*/
 
 augroup end
