@@ -39,6 +39,7 @@
   let Purple = "guifg=#af87ff guibg=NONE gui=NONE ctermfg=141 ctermbg=NONE cterm=NONE"
   let HotPurple = "guibg=NONE gui=NONE ctermfg=99 ctermbg=NONE cterm=NONE"
   let CoolPurple = "guibg=NONE gui=NONE ctermfg=105 ctermbg=NONE cterm=NONE"
+  let Crimson = "guibg=NONE gui=NONE ctermfg=89 ctermbg=NONE cterm=NONE"
   let CoolBlue = "guibg=NONE gui=NONE ctermfg=25 ctermbg=NONE cterm=NONE"
   let MidBlue = "guibg=NONE gui=NONE ctermfg=33 ctermbg=NONE cterm=NONE"
   let LightBlue = "guibg=NONE gui=NONE ctermfg=33 ctermbg=NONE cterm=NONE"
@@ -46,6 +47,8 @@
   let CoolRed = "guibg=NONE gui=NONE ctermfg=210 ctermbg=NONE cterm=NONE"
   let DarkTeal = "guibg=NONE gui=NONE ctermfg=18 ctermbg=NONE cterm=NONE"
   let Teal = "guibg=NONE gui=NONE ctermfg=29 ctermbg=NONE cterm=NONE"
+  let FadedTeal = "guibg=NONE gui=NONE ctermfg=159 ctermbg=NONE cterm=NONE"
+
   let LightTeal = "guibg=NONE gui=NONE ctermfg=38 ctermbg=NONE cterm=NONE"
   let DarkGreen = "guibg=NONE gui=NONE ctermfg=22 ctermbg=NONE cterm=NONE"
 
@@ -69,7 +72,9 @@
     exe "hi Boolean "         .Red
 
     exe "hi Character "       .Green
-    exe "hi Comment "         .DarkGreen
+
+    " DarkGreen
+    exe "hi Comment "         .Teal
 
     exe "hi Debug "           .Black
     exe "hi Define "          .Purple
@@ -86,27 +91,31 @@
     exe "hi Macro "           .SilverWhite
 
     " LightSilver
-    exe "hi Normal "          .LightSilver
+    exe "hi Normal "          .FadedTeal
     exe "hi Noise "           .White
 
     exe "hi Operator "        .Peach
     exe "hi PreCondit "       .Purple
     exe "hi PreProc "         .Purple
-    exe "hi Repeat "          .Peach
+    exe "hi Repeat "          .Orange
 
-    exe "hi Special "         .Pink
+    exe "hi Special "         .Purple
     exe "hi SpecialChar "     .Pink
-    exe "hi SpecialComment "  .Pink
+    exe "hi SpecialComment "  .CoolPurple
 
 
     " i.e. const
     exe "hi StorageClass "    .DarkRed
     exe "hi Structure "       .HotPink
     exe "hi TypeDef "         .Lime
-    exe "hi Type "            .CoolRed
+    
+    " CoolRed
+    exe "hi Type "            .Crimson
     exe "hi Function "        .MintBlue
-    " i.e. std
-    exe "hi Constant "        .LightTeal
+
+    " i.e. @MORECOLOR LightTeal, FadedTeal, LightPeach
+    exe "hi Constant "        .MidBlue
+
     exe "hi Modifier "        .Yellow
 
     exe "hi Conditional "     .NeonOrange

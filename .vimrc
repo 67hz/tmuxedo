@@ -184,6 +184,7 @@ let g:gitgutter_realtime = 0
 let g:UltiSnipsExpandTrigger="<c-j>"
 let g:UltiSnipsJumpForwardTrigger="<c-l>"
 let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+nnoremap <leader>ur :call UltiSnips#RefreshSnippets()<Cr>>
 
 
 let g:fzf_buffers_jump = 1
@@ -271,12 +272,22 @@ set pastetoggle=<F3>
 let g:fzf_tags_command = 'ctags -R -f'
 
 
+let g:load_doxygen_syntax=1
+let g:doxyeng_enhanced_color=1
+
+
+
+
+
 
 " Close Vi if Nerdtree is the only window left open
 " autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
 
 augroup filetype_cpp
+    " :autocmd FileType cpp setlocal comments-=:<space>*<space>
+    " :autocmd FileType cpp setlocal comments+=:<space>*<space>
+
     :autocmd FileType cpp nnoremap <buffer> <localleader>c I//<space><esc>
     :autocmd FileType cpp vnoremap <buffer> <localleader>c I/*<space><esc><s-a><space>*/
 
