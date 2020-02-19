@@ -1,6 +1,6 @@
 " Vim color file -- Cobra
 " Maintainer:   Aaron Hinojosa
-" Version: 1.1.0
+" Version: 1.2.0
 
 " cobra.vim {{{
   set t_Co=256
