@@ -1,29 +1,31 @@
 " Vim color file -- Cobra
 " Maintainer:   Aaron Hinojosa
-" Version: 1.2.0
+" Version: 1.2.2
+
 
 " cobra.vim {{{
+  set background=dark
   set t_Co=256
+
   let g:colors_name = "cobra"
   let bgcolor = &background
   highlight clear SignColumn
 " }}}
+"
+" s: -> scoped to script
+  let s:colors = {}
+
 
 " Colors: {{{
-  if bgcolor == "light"
-  endif
-  if bgcolor == "dark"
-    let Black = "guifg=#585858 guibg=NONE gui=NONE ctermfg=240 ctermbg=NONE cterm=NONE"
-    let Orange = "guifg=#ffaf00 guibg=NONE gui=NONE ctermfg=214 ctermbg=NONE cterm=NONE"
-    let NeonOrange = "guifg=#ffaf00 guibg=NONE gui=NONE ctermfg=226 ctermbg=NONE cterm=NONE"
-    let Lime = "guifg=#ffaf00 guibg=NONE gui=NONE ctermfg=119 ctermbg=NONE cterm=NONE"
-    let Peach = "guifg=#ffd787 guibg=NONE gui=NONE ctermfg=222 ctermbg=NONE cterm=NONE"
-    let LightPeach = "guifg=#ffffaf guibg=NONE gui=NONE ctermfg=229 ctermbg=NONE cterm=NONE"
-    let LightestPeach = "guifg=#ffffd7 guibg=NONE gui=NONE ctermfg=230 ctermbg=NONE cterm=NONE"
-    let Red = "guifg=#ff5f5f guibg=NONE gui=NONE ctermfg=203 ctermbg=NONE cterm=NONE"
+  let Black = "guifg=#585858 guibg=NONE gui=NONE ctermfg=240 ctermbg=NONE cterm=NONE"
 
-  endif
-
+  let NeonOrange = "guifg=#ffaf00 guibg=NONE gui=NONE ctermfg=226 ctermbg=NONE cterm=NONE"
+  let Lime = "guifg=#ffaf00 guibg=NONE gui=NONE ctermfg=119 ctermbg=NONE cterm=NONE"
+  let Peach = "guifg=#ffd787 guibg=NONE gui=NONE ctermfg=222 ctermbg=NONE cterm=NONE"
+  let LightPeach = "guifg=#ffffaf guibg=NONE gui=NONE ctermfg=229 ctermbg=NONE cterm=NONE"
+  let LightestPeach = "guifg=#ffffd7 guibg=NONE gui=NONE ctermfg=230 ctermbg=NONE cterm=NONE"
+  let Red = "guifg=#ff5f5f guibg=NONE gui=NONE ctermfg=203 ctermbg=NONE cterm=NONE"
+  let Orange = "guifg=#ffaf00 guibg=NONE gui=NONE ctermfg=214 ctermbg=NONE cterm=NONE"
   let Green = "guifg=#87af5f guibg=NONE gui=NONE ctermfg=107 ctermbg=NONE cterm=NONE"
   let SpotGreen = "guifg=#00af5f guibg=NONE gui=NONE ctermfg=35 ctermbg=NONE cterm=NONE"
   let Gray = "guifg=#bcbcbc guibg=NONE gui=NONE ctermfg=250 ctermbg=NONE cterm=NONE"
@@ -63,84 +65,82 @@
 
 " }}}
 
-" Light Background: {{{
-  if bgcolor == "light"
-  endif
-" }}}
-" Dark Background: {{{
-  if bgcolor == "dark"
-    exe "hi Boolean "         .Red
+  exe "hi Boolean "         .Red
 
-    exe "hi Character "       .Green
+  exe "hi Character "       .Green
 
-    " DarkGreen
-    exe "hi Comment "         .Teal
+  " DarkGreen
+  exe "hi Comment "         .Teal
 
-    exe "hi Debug "           .Black
-    exe "hi Define "          .Purple
+  exe "hi Debug "           .Black
+  exe "hi Define "          .Purple
 
-    exe "hi Exception "       .Peach
-    exe "hi Float "           .Pink
+  exe "hi Exception "       .Peach
+  exe "hi Float "           .Pink
 
-    exe "hi Identifier "      .LightestPeach
-    exe "hi Ignore "          .Blue
-    exe "hi Include "         .DarkPurple
-    exe "hi Keyword "         .Blue
-    exe "hi Label "           .LightPeach
-    exe "hi LineNr "          .Black
-    exe "hi Macro "           .SilverWhite
+  exe "hi Identifier "      .LightestPeach
+  exe "hi Ignore "          .Blue
+  exe "hi Include "         .DarkPurple
+  exe "hi Keyword "         .Blue
+  exe "hi Label "           .LightPeach
+  exe "hi LineNr "          .Black
+  exe "hi Macro "           .SilverWhite
 
-    " LightSilver
-    exe "hi Normal "          .FadedTeal
-    exe "hi Noise "           .White
+  " LightSilver, FadedTeal, LightestPeach
+  exe "hi Normal "          .LightSilver
 
-    exe "hi Operator "        .Peach
-    exe "hi PreCondit "       .Purple
-    exe "hi PreProc "         .Purple
-    exe "hi Repeat "          .Orange
+  exe "hi Noise "           .White
 
-    exe "hi Special "         .Purple
-    exe "hi SpecialChar "     .Pink
-    exe "hi SpecialComment "  .CoolPurple
+  exe "hi Operator "        .Peach
+  exe "hi PreCondit "       .Purple
+  exe "hi PreProc "         .Purple
+  exe "hi Repeat "          .Orange
+
+  exe "hi Special "         .Purple
+  exe "hi SpecialChar "     .Pink
+  exe "hi SpecialComment "  .CoolPurple
 
 
-    " i.e. const
-    exe "hi StorageClass "    .DarkRed
-    exe "hi Structure "       .HotPink
-    exe "hi TypeDef "         .Lime
-    
-    " CoolRed
-    exe "hi Type "            .Crimson
-    exe "hi Function "        .MintBlue
+  " i.e. const
+  exe "hi StorageClass "    .DarkRed
+  exe "hi Structure "       .HotPink
+  exe "hi TypeDef "         .Lime
+  
+  " CoolRed, MidBlue
+  exe "hi Type "            .CoolRed
 
-    " i.e. @MORECOLOR LightTeal, FadedTeal, LightPeach
-    exe "hi Constant "        .MidBlue
+  
+  " Teal - darker, MintBlue - lighter
+  exe "hi Function "        .Blue
 
-    exe "hi Modifier "        .Yellow
+  " i.e. @MORECOLOR LightTeal, FadedTeal, LightPeach
+  exe "hi Constant "        .LightPeach
 
-    exe "hi Conditional "     .NeonOrange
+  exe "hi Modifier "        .Yellow
 
-    exe "hi Delimiter "       .LightestPeach
-    exe "hi Statement "       .CoolYellow
+  exe "hi Conditional "     .CoolRed
 
-    exe "hi Number "          .Green
+  exe "hi Delimiter "       .LightestPeach
 
-    exe "hi String "          .CoolPurple
+  " return, dox briefs: CoolYellow
+  exe "hi Statement "       .MidBlue
 
+  exe "hi Number "          .Green
 
-    exe "hi Tag "             .LightestPeach
-    exe "hi Todo "            .SpotGreen
-
-    " Error color
-    exe "hi SpellBad "        .Red
+  exe "hi String "          .CoolPurple
 
 
+  exe "hi Tag "             .LightestPeach
+  exe "hi Todo "            .SpotGreen
 
-    hi CursorLine   guifg=NONE      guibg=#1c1c1c   gui=NONE      ctermfg=NONE      ctermbg=234       cterm=NONE
-    hi ColorColumn  guifg=#ff0000   guibg=#1c1c1c   gui=NONE      ctermfg=203       ctermbg=234       cterm=NONE
-    hi Visual guifg=NONE guibg=#ffffff ctermfg=234 ctermbg=255
-  endif
-" }}}
+  " Error color
+  exe "hi SpellBad "        .Red
+
+
+
+  hi CursorLine   guifg=NONE      guibg=#1c1c1c   gui=NONE      ctermfg=NONE      ctermbg=234       cterm=NONE
+  hi ColorColumn  guifg=#ff0000   guibg=#1c1c1c   gui=NONE      ctermfg=203       ctermbg=234       cterm=NONE
+  hi Visual guifg=NONE guibg=#ffffff ctermfg=234 ctermbg=255
 
 
 hi Underlined   guifg=NONE      guibg=NONE      gui=underline ctermfg=NONE      ctermbg=NONE      cterm=underline
@@ -179,7 +179,7 @@ hi Folded ctermbg=black ctermfg=lightblue
 exe "hi YcmErrorSign " .Red
 exe "hi WarningSign " .Yellow
 exe "hi YcmErrorLine " .Silver
-exe "hi YcmWarningLine " .Yellow
+exe "hi YcmWarningLine " .HotPurple
 
 " MIT LICENSE {{{
 " The MIT License (MIT)
