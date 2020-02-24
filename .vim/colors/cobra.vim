@@ -1,6 +1,6 @@
 " Vim color file -- Cobra
 " Maintainer:   Aaron Hinojosa
-" Version: 1.2.2
+" Version: 1.3.0
 
 
 " cobra.vim {{{
@@ -19,13 +19,28 @@
 " Colors: {{{
   let Black = "guifg=#585858 guibg=NONE gui=NONE ctermfg=240 ctermbg=NONE cterm=NONE"
 
-  let NeonOrange = "guifg=#ffaf00 guibg=NONE gui=NONE ctermfg=226 ctermbg=NONE cterm=NONE"
+
   let Lime = "guifg=#ffaf00 guibg=NONE gui=NONE ctermfg=119 ctermbg=NONE cterm=NONE"
   let Peach = "guifg=#ffd787 guibg=NONE gui=NONE ctermfg=222 ctermbg=NONE cterm=NONE"
+
+  " move bg def to global
   let LightPeach = "guifg=#ffffaf guibg=NONE gui=NONE ctermfg=229 ctermbg=NONE cterm=NONE"
+
   let LightestPeach = "guifg=#ffffd7 guibg=NONE gui=NONE ctermfg=230 ctermbg=NONE cterm=NONE"
   let Red = "guifg=#ff5f5f guibg=NONE gui=NONE ctermfg=203 ctermbg=NONE cterm=NONE"
+  let CamoPurple = "guifg=#ffaf00 guibg=NONE gui=NONE ctermfg=95 ctermbg=NONE cterm=NONE"
+  let CamoPurpleDark = "guifg=#ffaf00 guibg=NONE gui=NONE ctermfg=91 ctermbg=NONE cterm=NONE"
+  let CamoPurpleFaded = "guifg=#ffaf00 guibg=NONE gui=NONE ctermfg=61 ctermbg=NONE cterm=NONE"
+  let CamoHotPinkDark = "guifg=#ffaf00 guibg=NONE gui=NONE ctermfg=89 ctermbg=NONE cterm=NONE"
+  let CamoSilver = "guifg=#ffaf00 guibg=NONE gui=NONE ctermfg=59 ctermbg=NONE cterm=NONE"
+  let CamoLightSilver = "guifg=#ffaf00 guibg=NONE gui=NONE ctermfg=247 ctermbg=NONE cterm=NONE"
+
+  let CamoBrown = "guifg=#ffaf00 guibg=NONE gui=NONE ctermfg=94 ctermbg=NONE cterm=NONE"
+  let CamoOrange = "guifg=#ffaf00 guibg=NONE gui=NONE ctermfg=178 ctermbg=NONE cterm=NONE"
+  let Brown = "guifg=#ffaf00 guibg=NONE gui=NONE ctermfg=178 ctermbg=NONE cterm=NONE"
+  let FadedOrange = "guifg=#ffaf00 guibg=NONE gui=NONE ctermfg=208 ctermbg=NONE cterm=NONE"
   let Orange = "guifg=#ffaf00 guibg=NONE gui=NONE ctermfg=214 ctermbg=NONE cterm=NONE"
+  let NeonOrange = "guifg=#ffaf00 guibg=NONE gui=NONE ctermfg=226 ctermbg=NONE cterm=NONE"
   let Green = "guifg=#87af5f guibg=NONE gui=NONE ctermfg=107 ctermbg=NONE cterm=NONE"
   let SpotGreen = "guifg=#00af5f guibg=NONE gui=NONE ctermfg=35 ctermbg=NONE cterm=NONE"
   let Gray = "guifg=#bcbcbc guibg=NONE gui=NONE ctermfg=250 ctermbg=NONE cterm=NONE"
@@ -69,8 +84,7 @@
 
   exe "hi Character "       .Green
 
-  " DarkGreen
-  exe "hi Comment "         .Teal
+
 
   exe "hi Debug "           .Black
   exe "hi Define "          .Purple
@@ -80,38 +94,43 @@
 
   exe "hi Identifier "      .LightestPeach
   exe "hi Ignore "          .Blue
-  exe "hi Include "         .DarkPurple
+  exe "hi Include "         .CamoPurpleFaded
   exe "hi Keyword "         .Blue
   exe "hi Label "           .LightPeach
   exe "hi LineNr "          .Black
-  exe "hi Macro "           .SilverWhite
+  exe "hi Macro "           .Peach
 
   " LightSilver, FadedTeal, LightestPeach
-  exe "hi Normal "          .LightSilver
+  exe "hi Normal "          .LightPeach
 
   exe "hi Noise "           .White
 
   exe "hi Operator "        .Peach
   exe "hi PreCondit "       .Purple
   exe "hi PreProc "         .Purple
-  exe "hi Repeat "          .Orange
+  exe "hi Repeat "          .CoolRed
 
-  exe "hi Special "         .Purple
+  exe "hi Special "         .CamoPurpleDark
   exe "hi SpecialChar "     .Pink
-  exe "hi SpecialComment "  .CoolPurple
+  exe "hi SpecialComment "  .CamoBrown
+  " DarkGreen
+  exe "hi Comment "         .CamoSilver
 
 
   " i.e. const
-  exe "hi StorageClass "    .DarkRed
+  exe "hi StorageClass "    .CamoOrange
+
   exe "hi Structure "       .HotPink
-  exe "hi TypeDef "         .Lime
+
+  " numeric_limitsc vector
+  exe "hi TypeDef "         .CamoPurple
   
   " CoolRed, MidBlue
-  exe "hi Type "            .CoolRed
+  exe "hi Type "            .SilverWhite
 
   
   " Teal - darker, MintBlue - lighter
-  exe "hi Function "        .Blue
+  exe "hi Function "        .Green
 
   " i.e. @MORECOLOR LightTeal, FadedTeal, LightPeach
   exe "hi Constant "        .LightPeach
@@ -122,16 +141,16 @@
 
   exe "hi Delimiter "       .LightestPeach
 
-  " return, dox briefs: CoolYellow
-  exe "hi Statement "       .MidBlue
+  " return, lexical_cast, dox briefs: CoolYellow
+  exe "hi Statement "       .CamoPurple
 
   exe "hi Number "          .Green
 
-  exe "hi String "          .CoolPurple
+  exe "hi String "          .CamoPurpleFaded
 
 
   exe "hi Tag "             .LightestPeach
-  exe "hi Todo "            .SpotGreen
+  exe "hi Todo "            .SilverWhite
 
   " Error color
   exe "hi SpellBad "        .Red
@@ -180,6 +199,10 @@ exe "hi YcmErrorSign " .Red
 exe "hi WarningSign " .Yellow
 exe "hi YcmErrorLine " .Silver
 exe "hi YcmWarningLine " .HotPurple
+
+" exe "hi Normal ctermbg=235"
+exe "hi Normal ctermbg=293338"
+" exe "hi Normal ctermbg=22282b"
 
 " MIT LICENSE {{{
 " The MIT License (MIT)
