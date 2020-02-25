@@ -47,8 +47,6 @@ Plugin 'honza/vim-snippets'
 " Bundle 'sudar/vim-arduino-snippets'
 
 
-
-
 " Language Additions
 Plugin 'shirk/vim-gas'
 Plugin 'ycm-core/YouCompleteMe'
@@ -60,6 +58,12 @@ Plugin 'dansomething/vim-eclim'
 
 " Plugin 'jplaut/vim-arduino-ino'
 " Plugin 'sudar/vim-arduino-syntax'
+
+" Debugger
+" Plugin 'lldb-tools/vim-lldb'
+Plugin '67hz/vim-lldb'
+Plugin 'vim-weather'
+
 
 
 " Syntax
@@ -90,8 +94,8 @@ colorscheme cobra
 " Don't show the intro message on startup
 " set shortmess=I                        
 
-set background=dark
-set t_Co=256
+" set background=dark
+" set t_Co=256
 set mouse=a
 set laststatus=2
 set clipboard=unnamed
@@ -101,13 +105,15 @@ set clipboard=unnamed
 let g:ycm_clangd_uses_ycmd_caching = 0
 let g:ycm_clangd_binary_path = exepath("clangd")
 
-let g:ycm_python_interpreter_path = '/usr/bin/python'
+let g:ycm_python_interpreter_path = '/usr/bin/python3'
 let g:ycm_python_sys_path = ['system']
+" let g:ycm_python_sys_path = ['/Applications/Xcode.app/Contents/SharedFrameworks/LLDB.framework/Resources/Python3']
 let g:ycm_extra_conf_vim_data = [
   \ 'g:ycm_python_interpreter_path',
   \ 'g:ycm_python_sys_path'
   \]
 let g:ycm_global_ycm_extra_conf = '~/global_extra_conf.py'
+let g:ycm_confirm_extra_conf = 0
 
 " close youcompleteme docs window after selection.  obviously.
 let g:ycm_autoclose_preview_window_after_completion=1
@@ -276,6 +282,9 @@ let g:load_doxygen_syntax=1
 let g:doxyeng_enhanced_color=1
 
 
+
+" gdb
+nnoremap <Leader>db :packadd termdebug<Cr> :Termdebug<Cr>
 
 
 
