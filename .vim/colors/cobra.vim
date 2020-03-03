@@ -1,6 +1,6 @@
 " Vim color file -- Cobra
 " Maintainer:   Aaron Hinojosa
-" Version: 1.3.0
+" Version: 1.3.1
 
 
 " cobra.vim {{{
@@ -18,6 +18,7 @@
 
 " Colors: {{{
   let Black = "guifg=#585858 guibg=NONE gui=NONE ctermfg=240 ctermbg=NONE cterm=NONE"
+  let JetBlack = "guifg=#080808 guibg=NONE gui=NONE ctermfg=237 ctermbg=NONE cterm=NONE"
 
 
   let Lime = "guifg=#ffaf00 guibg=NONE gui=NONE ctermfg=119 ctermbg=NONE cterm=NONE"
@@ -54,7 +55,7 @@
   let MintBlue = "guibg=NONE gui=NONE ctermfg=51 ctermbg=NONE cterm=NONE"
   let FadedRed = "guibg=NONE gui=NONE ctermfg=52 ctermbg=NONE cterm=NONE"
   let Purple = "guifg=#af87ff guibg=NONE gui=NONE ctermfg=141 ctermbg=NONE cterm=NONE"
-  let HotPurple = "guibg=NONE gui=NONE ctermfg=99 ctermbg=NONE cterm=NONE"
+  let HotPurple = "guibg=#000000 gui=NONE ctermfg=99 ctermbg=NONE cterm=NONE"
   let CoolPurple = "guibg=NONE gui=NONE ctermfg=105 ctermbg=NONE cterm=NONE"
   let Crimson = "guibg=NONE gui=NONE ctermfg=89 ctermbg=NONE cterm=NONE"
   let CoolBlue = "guibg=NONE gui=NONE ctermfg=25 ctermbg=NONE cterm=NONE"
@@ -97,7 +98,8 @@
   exe "hi Include "         .CamoPurpleFaded
   exe "hi Keyword "         .Blue
   exe "hi Label "           .LightPeach
-  exe "hi LineNr "          .Black
+  exe "hi LineNr "          .JetBlack
+  exe "hi CursorLineNr "    .CamoPurpleDark
   exe "hi Macro "           .Peach
 
   " LightSilver, FadedTeal, LightestPeach
@@ -133,7 +135,7 @@
   exe "hi Function "        .Green
 
   " i.e. @MORECOLOR LightTeal, FadedTeal, LightPeach
-  exe "hi Constant "        .LightPeach
+  exe "hi Constant "        .LightTeal
 
   exe "hi Modifier "        .Yellow
 
@@ -157,10 +159,10 @@
 
 
 
-  hi CursorLine   guifg=NONE      guibg=#1c1c1c   gui=NONE      ctermfg=NONE      ctermbg=234       cterm=NONE
+  " hi CursorLine   guifg=NONE      guibg=#1c1c1c   gui=NONE      ctermfg=NONE      ctermbg=234       cterm=NONE
+  hi CursorLine   guifg=NONE      guibg=#303030 gui=NONE      ctermfg=NONE        ctermbg=236      cterm=NONE
   hi ColorColumn  guifg=#ff0000   guibg=#1c1c1c   gui=NONE      ctermfg=203       ctermbg=234       cterm=NONE
   hi Visual guifg=NONE guibg=#ffffff ctermfg=234 ctermbg=255
-
 
 hi Underlined   guifg=NONE      guibg=NONE      gui=underline ctermfg=NONE      ctermbg=NONE      cterm=underline
 
@@ -171,8 +173,6 @@ exe "hi IndentGuidesOdd " .LightestPeach
 " was 202 for burnt oj
 hi Directory guifg=#ffff87 ctermfg=202
 
-" line number
-hi CursorLineNr guifg=#050505
 
 " set tab colors
 hi TabLineSel ctermfg=red ctermbg=black
@@ -196,12 +196,16 @@ hi Folded ctermbg=black ctermfg=lightblue
 
 " YCM
 exe "hi YcmErrorSign " .Red
+exe "hi YcmErrorSection " .CamoHotPinkDark
+exe "hi YcmWarningSection " .CoolRed
 exe "hi WarningSign " .Yellow
 exe "hi YcmErrorLine " .Silver
 exe "hi YcmWarningLine " .HotPurple
+exe "hi ycmwarningline ctermbg=NONE"
 
+" sample background changes
 " exe "hi Normal ctermbg=235"
-exe "hi Normal ctermbg=293338"
+ exe "hi Normal ctermbg=293338"
 " exe "hi Normal ctermbg=22282b"
 
 " MIT LICENSE {{{
