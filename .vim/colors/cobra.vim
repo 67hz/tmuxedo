@@ -54,6 +54,8 @@
   let DarkPurple = "guibg=NONE gui=NONE ctermfg=55 ctermbg=NONE cterm=NONE"
   let MintBlue = "guibg=NONE gui=NONE ctermfg=51 ctermbg=NONE cterm=NONE"
   let FadedRed = "guibg=NONE gui=NONE ctermfg=52 ctermbg=NONE cterm=NONE"
+  let BrightWhiteOnRed = "guibg=#ff0000 gui=NONE ctermfg=231 ctermbg=196 cterm=NONE"
+  let BrightRed = "guibg=#ff0000 gui=NONE ctermfg=196 ctermbg=NONE cterm=NONE"
   let Purple = "guifg=#af87ff guibg=NONE gui=NONE ctermfg=141 ctermbg=NONE cterm=NONE"
   let HotPurple = "guibg=#000000 gui=NONE ctermfg=99 ctermbg=NONE cterm=NONE"
   let CoolPurple = "guibg=NONE gui=NONE ctermfg=105 ctermbg=NONE cterm=NONE"
@@ -81,7 +83,7 @@
 
 " }}}
 
-  exe "hi Boolean "         .Red
+  exe "hi Boolean "         .CamoHotPinkDark
 
   exe "hi Character "       .Green
 
@@ -196,7 +198,7 @@ hi Folded ctermbg=black ctermfg=lightblue
 
 " YCM
 exe "hi YcmErrorSign " .Red
-exe "hi YcmErrorSection " .CamoHotPinkDark
+exe "hi YcmErrorSection " .CamoLightSilver
 exe "hi YcmWarningSection " .CoolRed
 exe "hi WarningSign " .Yellow
 exe "hi YcmErrorLine " .Silver
