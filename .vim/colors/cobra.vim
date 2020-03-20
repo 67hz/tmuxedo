@@ -112,7 +112,7 @@
   exe "hi Operator "        .Peach
   exe "hi PreCondit "       .Purple
   exe "hi PreProc "         .Purple
-  exe "hi Repeat "          .CoolRed
+  exe "hi Repeat "          .LightTeal
 
   exe "hi Special "         .CamoPurpleDark
   exe "hi SpecialChar "     .Pink
@@ -141,7 +141,7 @@
 
   exe "hi Modifier "        .Yellow
 
-  exe "hi Conditional "     .CoolRed
+  exe "hi Conditional "     .LightTeal
 
   exe "hi Delimiter "       .LightestPeach
 
