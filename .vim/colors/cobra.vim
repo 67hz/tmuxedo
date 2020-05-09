@@ -187,10 +187,10 @@ hi VertSplit ctermfg=black ctermbg=black
 set fillchars=stl:-,stlnc:-,vert:\|
 
 " Popup menu
-hi Pmenu ctermfg=blue ctermbg=black
+hi Pmenu ctermfg=yellow ctermbg=black
 hi PmenuSbar ctermfg=lightblue ctermbg=black
 hi PmenuThumb ctermfg=red ctermbg=black
-hi PmenuSel ctermfg=lightblue ctermbg=darkgray
+hi PmenuSel ctermfg=green ctermbg=darkgray
 
 " Code Folding
 hi Folded ctermbg=black ctermfg=lightblue
