@@ -190,7 +190,7 @@ set fillchars=stl:-,stlnc:-,vert:\|
 hi Pmenu ctermfg=yellow ctermbg=black
 hi PmenuSbar ctermfg=lightblue ctermbg=black
 hi PmenuThumb ctermfg=red ctermbg=black
-hi PmenuSel ctermfg=green ctermbg=darkgray
+hi PmenuSel ctermfg=white ctermbg=magenta
 
 " Code Folding
 hi Folded ctermbg=black ctermfg=lightblue
