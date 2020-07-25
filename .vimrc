@@ -1,104 +1,20 @@
-set nocompatible  " be iMproved, requiredojkjkj
-filetype off
+set nocp
+set packpath+=$HOME/.vim/pack/
+set packpath+=$HOME/.vim/pack/ext/
+set packpath+=$HOME/.vim/pack/mine/
 
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
+packadd! YouCompleteMe
+packadd! vim-cobra
 
-" let Vundle manage Vundle, required
-Plugin 'gmarik/Vundle.vim'
-
-" -------
-" Plugins
-" -------
-
-" Navigation
-Plugin 'junegunn/fzf'
-Plugin 'junegunn/fzf.vim'
-
-" UI Stuff
-Plugin 'airblade/vim-gitgutter'
-Plugin 'nathanaelkane/vim-indent-guides'
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
-
-Plugin 'scrooloose/nerdtree'
-Plugin 'mbbill/undotree'
-Plugin 'jszakmeister/vim-togglecursor'
-Plugin 'majutsushi/tagbar'
-Plugin 'benjaminwhite/Benokai'
-Plugin 'whatyouhide/vim-gotham'
-
-" Commands
-" Plugin 'tpope/vim-fugitive'
-Plugin 'tomtom/tcomment_vim'
-Plugin 'tpope/vim-surround'
-Plugin 'tpope/vim-obsession'
-
-" Automatic Helpers
-" Plugin 'xolox/vim-session'
-" Plugin 'Raimondi/delimitMate'
-
-" Snippets
-Plugin 'SirVer/ultisnips'
-
-" Optional:
-Plugin 'honza/vim-snippets'
-" Bundle 'sudar/vim-arduino-snippets'
-
-
-" Language Additions
-Plugin 'shirk/vim-gas'
-Plugin 'ycm-core/YouCompleteMe'
-" Plugin 'justmao945/vim-clang'
-" Plugin 'sheerun/vim-polyglot'
-Plugin 'leshill/vim-json'
-
-Plugin 'dansomething/vim-eclim'
-
-" Plugin 'jplaut/vim-arduino-ino'
-" Plugin 'sudar/vim-arduino-syntax'
-
-" Debugger
-" Plugin 'lldb-tools/vim-lldb'
-Plugin '67hz/vim-lldb'
-Plugin 'vim-weather'
-
-
-
-" Syntax
-Plugin 'octol/vim-cpp-enhanced-highlight'
-
-
-" Plugin 'msanders/cocoa.vim'
-Plugin 'mutewinter/nginx.vim'
-Plugin 'mutewinter/vim-tmux'
-Plugin 'plasticboy/vim-markdown'
-Plugin 'JamshedVesuna/vim-markdown-preview'
-
-" MatchIt
-Plugin 'matchit.zip'
-Plugin 'kana/vim-textobj-user'
-Plugin 'nelstrom/vim-textobj-rubyblock'
-
-"Libraries
-Plugin 'L9'
-Plugin 'tpope/vim-repeat'
-Plugin 'mattn/webapi-vim'
-Plugin 'xolox/vim-misc'
-
-call vundle#end()
-
-colorscheme cobra
 
 " Don't show the intro message on startup
-" set shortmess=I                        
+set shortmess=I                        
 
-" set background=dark
 " set t_Co=256
 set mouse=a
 set laststatus=2
 set clipboard=unnamed
+filetype on
 
 
 " let clangd fully control code completion
@@ -150,7 +66,7 @@ set lazyredraw
 set backspace=2
 
 " ctrl+n toggles netrw
-noremap <C-n> :NERDTreeToggle<CR>
+noremap <C-n> :Lex<CR>
 
 " ctrl+u toggles undotree
 noremap <C-u> :UndotreeToggle<CR>
@@ -199,12 +115,12 @@ nnoremap <silent> <Leader>g :GFiles?<Cr>
 nnoremap <silent> <Leader>m :Marks<Cr>
 nnoremap <silent> <Leader>t :Tags<Cr>
 
+nnoremap <silent> <Leader>bb :buffers<Cr>
+
 
 " tab to move through buffers - shift+tab to go back
 nnoremap  <silent>   <tab>  :if &modifiable && !&readonly && &modified <CR> :write<CR> :endif<CR>:bnext<CR>
 nnoremap  <silent> <s-tab>  :if &modifiable && !&readonly && &modified <CR> :write<CR> :endif<CR>:bprevious<CR>
-
-
 
 
 " set autoindent
@@ -225,11 +141,11 @@ let g:indent_guides_auto_colors = 0
 
 
 " customize netrw
-" let g:netrw_banner=0
-" let g:netrw_liststyle=3
+let g:netrw_banner=0
 " let g:netrw_browse_split=4 "open in previous window
-" let g:netrw_altv=1
-" let g:netrw_winsize=25
+let g:netrw_altv=1
+let g:netrw_winsize=25
+let g:netrw_liststyle=3
 
 " augroup ProjectDrawer
 "   autocmd!
@@ -252,7 +168,6 @@ command! -bang -nargs=? -complete=dir Files
 :inoremap <c-d> <esc> ddi
 
 
-
 syntax on
 set ruler
 set number
@@ -269,10 +184,6 @@ set undodir=~/.vim/undo//
 " toggle paste mode
 set pastetoggle=<F3>
 
-" let g:clang_cpp_options = '-std=c++14'
-" let g:clang_auto = 1
-" :nnoremap <F12> :ClangSyntaxCheck<CR>
-"
 
 
 let g:fzf_tags_command = 'ctags -R -f'
@@ -286,11 +197,6 @@ let g:doxyeng_enhanced_color=1
 " gdb
 nnoremap <Leader>db :packadd termdebug<Cr> :Termdebug<Cr>
 
-
-
-
-" Close Vi if Nerdtree is the only window left open
-" autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
 
 augroup filetype_cpp
@@ -316,8 +222,30 @@ augroup END
 :iabbrev @@ aaron@avenue6creative.com
 
 
+" cscope stuff - see help for more
+
+map g<C-]> :cs find 3 <C-R>=expand("<cword>")<CR><CR>
+map g<C-\> :cs find 0 <C-R>=expand("<cword>")<CR><CR>
+
+if has("cscope")
+  set csprg=/usr/bin/cscope
+  set csto=0
+  set cst
+  set nocsverb
+  " add any database in current directory
+  if filereadable("cscope.out")
+      cs add cscope.out
+  " else add database pointed to by environment
+  elseif $CSCOPE_DB != ""
+      cs add $CSCOPE_DB
+  endif
+  set csverb
+endif
+
+
 "watch and auto-reload .vimrc when it changes
 augroup reload_vimrc " {
     autocmd!
     autocmd BufWritePost $MYVIMRC source $MYVIMRC
 augroup END " }
+
