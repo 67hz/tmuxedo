@@ -6,7 +6,7 @@ Tmux and Vim styles
 * A minimal vim setup for C/C++/x86_64 dev
 
 
-For color scheme, see [vim-cobra](https://github.com/67hz/vim-cobra)
+For vim color scheme, see [cobra](https://github.com/67hz/vim-cobra)
 
 
 
