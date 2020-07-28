@@ -65,6 +65,9 @@ set lazyredraw
 " make backspace behave like other apps
 set backspace=2
 
+" disable highlighting after search
+nnoremap <silent><cr> :noh<CR><CR>
+
 " ctrl+n toggles netrw
 noremap <C-n> :Lex<CR>
 
@@ -98,25 +101,13 @@ set wildignore+=*/tmp/*,*.so,*.swp,*.zip
 let g:gitgutter_eager = 0
 let g:gitgutter_realtime = 0
 
-" Snipmate remap for insert and select
-" :imap <C-J> <esc>a<Plug>snipMateNextOrTrigger
-" :smap <C-J> <Plug>snipMateNextOrTrigger
-
 " Ultisnips
 let g:UltiSnipsExpandTrigger="<c-j>"
 let g:UltiSnipsJumpForwardTrigger="<c-l>"
 let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 nnoremap <leader>ur :call UltiSnips#RefreshSnippets()<Cr>>
 
-
-let g:fzf_buffers_jump = 1
-nnoremap <silent> <Leader>b :Buffers<Cr>
-nnoremap <silent> <Leader>g :GFiles?<Cr>
-nnoremap <silent> <Leader>m :Marks<Cr>
-nnoremap <silent> <Leader>t :Tags<Cr>
-
 nnoremap <silent> <Leader>bb :buffers<Cr>
-
 
 " tab to move through buffers - shift+tab to go back
 nnoremap  <silent>   <tab>  :if &modifiable && !&readonly && &modified <CR> :write<CR> :endif<CR>:bnext<CR>
@@ -126,18 +117,8 @@ nnoremap  <silent> <s-tab>  :if &modifiable && !&readonly && &modified <CR> :wri
 " set autoindent
 filetype plugin indent on
 
-let vim_markdown_preview_toggle=1
-let vim_markdown_preview_github=1
-let vim_markdown_preview_hotkey='<C-m>'
-
-let g:vim_markdown_folding_disabled=1 " Markdown
 
 set foldmethod=indent
-
-" allow custom theming for vim-indent-guides
-let g:indent_guides_auto_colors = 0
-
-
 
 
 " customize netrw
@@ -151,17 +132,6 @@ let g:netrw_liststyle=3
 "   autocmd!
 "   autocmd VimEnter * :Vexplore
 " augroup END
-
-
-
-
-
-" jZF
-nnoremap <C-p> :Files<Cr>
-
-" FZF add preview window
-command! -bang -nargs=? -complete=dir Files
-    \ call fzf#vim#files(<q-args>, {'options': ['--layout=reverse', '--info=inline', '--preview', '~/.vim/bundle/fzf.vim/bin/preview.sh {}']}, <bang>0)
 
 
 " generic helpers
@@ -185,12 +155,6 @@ set undodir=~/.vim/undo//
 set pastetoggle=<F3>
 
 
-
-let g:fzf_tags_command = 'ctags -R -f'
-
-
-let g:load_doxygen_syntax=1
-let g:doxyeng_enhanced_color=1
 
 
 
