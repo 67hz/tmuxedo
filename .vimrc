@@ -4,7 +4,7 @@ set packpath+=$HOME/.vim/pack/ext/
 set packpath+=$HOME/.vim/pack/mine/
 
 packadd! YouCompleteMe
-packadd! vim-cobra
+packadd! cobra
 
 
 " Don't show the intro message on startup
@@ -12,10 +12,25 @@ set shortmess=I
 
 " set t_Co=256
 set mouse=a
-set laststatus=2
+
+
 set clipboard=unnamed
 filetype on
+syntax on
+set noruler
+set number
 
+"
+" status line
+"
+set laststatus=2
+set statusline=%f  " path to file
+set statusline+=/
+set statusline+=buf:
+set statusline+=%n  " buffer number
+set statusline+=/    " separator
+set statusline+=FileType:   " label
+set statusline+=%y      " ft of file
 
 " let clangd fully control code completion
 let g:ycm_clangd_uses_ycmd_caching = 0
@@ -65,6 +80,13 @@ set lazyredraw
 " make backspace behave like other apps
 set backspace=2
 
+"
+" Languages
+"
+
+" Assembly
+let asmsyntax = "nasm"
+
 " disable highlighting after search
 nnoremap <silent><cr> :noh<CR><CR>
 
@@ -72,10 +94,10 @@ nnoremap <silent><cr> :noh<CR><CR>
 noremap <C-n> :Lex<CR>
 
 " ctrl+u toggles undotree
-noremap <C-u> :UndotreeToggle<CR>
+"noremap <C-u> :UndotreeToggle<CR>
 
 " ctrl+t toggles tagbar
-noremap <C-t> :TagbarToggle<CR>
+"noremap <C-t> :TagbarToggle<CR>
 
 " Clipboard: F1 copies, F2 pastes
 noremap <F1> :.w !pbcopy<CR><CR>
@@ -84,16 +106,7 @@ noremap <F2> :set paste<CR>:r !pbpaste<CR>:set nopaste<CR>
 inoremap <F2> <Esc>:set paste<CR>:r !pbpaste<CR>:set nopaste<CR>
 
 
-""" AIRLINE AND BUFFERS
-" Enable the list of buffers
-let g:airline#extensions#tabline#enabled = 1
-
-" Show just the filename
-let g:airline#extensions#tabline#fnamemod = ':t'
-
-let g:airline_theme="distinguished"
-
-" Ignore these fil
+" Ignore these files
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip 
 
 
@@ -107,7 +120,9 @@ let g:UltiSnipsJumpForwardTrigger="<c-l>"
 let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 nnoremap <leader>ur :call UltiSnips#RefreshSnippets()<Cr>>
 
+" All things buffer
 nnoremap <silent> <Leader>bb :buffers<Cr>
+nnoremap <leader>b<space> :buffer<space>
 
 " tab to move through buffers - shift+tab to go back
 nnoremap  <silent>   <tab>  :if &modifiable && !&readonly && &modified <CR> :write<CR> :endif<CR>:bnext<CR>
@@ -138,12 +153,10 @@ let g:netrw_liststyle=3
 :inoremap <c-d> <esc> ddi
 
 
-syntax on
-set ruler
-set number
 
-set tabstop=2
-set shiftwidth=2
+
+set tabstop=4
+set shiftwidth=4
 set expandtab " spaces for tabs
 
 " Backup Files
