@@ -6,7 +6,6 @@ syntax enable
 "set verbose=1
 "set verbosefile=vim_verbose.log
 
-packadd! YouCompleteMe
 packadd! tagbar
 packadd! vim-cpp-enhanced-highlight
 packadd! ctrlp.vim
@@ -20,8 +19,7 @@ colorscheme cobra
 nnoremap <leader>ll :packadd vim-lldb<CR>
 nnoremap <leader>y "*y<CR>
 
-nnoremap <F1> :echo 'foo'<CR>
-nnoremap <F2> :echo 'bar'<CR>
+nnoremap <leader>yy :call g:StartYcm()<CR>
 
 nnoremap <leader>m :make <CR>
 
@@ -29,7 +27,7 @@ nnoremap <leader>m :make <CR>
 let g:cpp_posix_standard=1
 
 " Don't show the intro message on startup
-set shortmess=I                        
+set shortmess=I
 
 " set t_Co=256
 set mouse=a
@@ -58,37 +56,40 @@ set statusline+=%y      " ft of file
 "let g:lldb_rows = 4
 let g:lldb_orientation = 1
 
-" let clangd fully control code completion
-let g:ycm_clangd_uses_ycmd_caching = 0
-let g:ycm_clangd_binary_path = exepath("clangd")
+fu g:StartYcm()
+  packadd YouCompleteMe
+  " let clangd fully control code completion
+  let g:ycm_clangd_uses_ycmd_caching = 0
+  let g:ycm_clangd_binary_path = exepath("clangd")
 
-let g:ycm_python_interpreter_path = '/usr/bin/python3'
-let g:ycm_python_sys_path = ['system']
-" let g:ycm_python_sys_path = ['/Applications/Xcode.app/Contents/SharedFrameworks/LLDB.framework/Resources/Python3']
-let g:ycm_extra_conf_vim_data = [
-  \ 'g:ycm_python_interpreter_path',
-  \ 'g:ycm_python_sys_path'
-  \]
-let g:ycm_global_ycm_extra_conf = '~/global_ycm_extra_conf.py'
-let g:ycm_confirm_extra_conf = 0
+  let g:ycm_python_interpreter_path = '/usr/bin/python3'
+  let g:ycm_python_sys_path = ['system']
+  let g:ycm_extra_conf_vim_data = [
+    \ 'g:ycm_python_interpreter_path',
+    \ 'g:ycm_python_sys_path'
+    \]
+  let g:ycm_confirm_extra_conf = 0
+  let g:ycm_global_ycm_extra_conf = '~/global_ycm_extra_conf.py'
 
-" close youcompleteme docs window after selection.  obviously.
-let g:ycm_autoclose_preview_window_after_completion=1
+  " close youcompleteme docs window after selection.  obviously.
+  let g:ycm_autoclose_preview_window_after_completion=1
 
-let g:ycm_enable_diagnostic_signs=1
+  let g:ycm_enable_diagnostic_signs=1
 
-" collect identifiers from whole project instead of visited files only
-let g:ycm_collect_identifiers_from_tags_files = 1
+  " collect identifiers from whole project instead of visited files only
+  let g:ycm_collect_identifiers_from_tags_files = 1
 
-" YCM Shortcuts
-nnoremap <Leader>gl :YcmCompleter GoToDeclaration<CR>
-nnoremap <Leader>gf :YcmCompleter GoToDefinition<CR>
-nnoremap <Leader>gr :YcmCompleter GoToDefinition<CR>
-nnoremap <Leader>gt :YcmCompleter GetType<CR>
-nnoremap <Leader>gd :YcmCompleter GetDoc<CR>
-nnoremap <Leader>rr :YcmCompleter RefactorRename<space>
-nnoremap <Leader>ft :YcmCompleter Format<CR>
-nnoremap <Leader>fx :YcmCompleter FixIt<CR>
+  " YCM Shortcuts
+  nnoremap <Leader>gl :YcmCompleter GoToDeclaration<CR>
+  nnoremap <Leader>gf :YcmCompleter GoToDefinition<CR>
+  nnoremap <Leader>gr :YcmCompleter GoToDefinition<CR>
+  nnoremap <Leader>gt :YcmCompleter GetType<CR>
+  nnoremap <Leader>gd :YcmCompleter GetDoc<CR>
+  nnoremap <Leader>rr :YcmCompleter RefactorRename<space>
+  nnoremap <Leader>ft :YcmCompleter Format<CR>
+  nnoremap <Leader>fx :YcmCompleter FixIt<CR>
+endfu
+
 
 
 " enable for ergodox
@@ -276,6 +277,7 @@ if has("cscope")
   set csto=0
   set cst
   set nocsverb
+  set csre
   " add any database in current directory
   if filereadable("cscope.out")
       cs add cscope.out
@@ -294,6 +296,62 @@ let g:UltiSnipsExpandTrigger="<c-l>"
 let g:UltiSnipsJumpForwardTrigger="<c-k>"
 let g:UltiSnipsJumpBackwardTrigger="<c-j>"
 nnoremap <leader>ur :call UltiSnips#RefreshSnippets()<Cr>
+
+" Highlight trailing spaces
+" http://vim.wikia.com/wiki/Highlight_unwanted_spaces
+highlight ExtraWhitespace ctermbg=red guibg=red
+match ExtraWhitespace /\s\+$/
+autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
+autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
+autocmd InsertLeave * match ExtraWhitespace /\s\+$/
+autocmd BufWinLeave * call clearmatches()
+
+
+" Enable OmniCompletion
+" http://vim.wikia.com/wiki/Omni_completion
+filetype plugin on
+set omnifunc=syntaxcomplete#Complete
+
+" Configure menu behavior
+" http://vim.wikia.com/wiki/VimTip1386
+set completeopt=longest,menuone
+inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+inoremap <expr> <C-n> pumvisible() ? '<C-n>' :
+  \ '<C-n><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
+inoremap <expr> <M-,> pumvisible() ? '<C-n>' :
+  \ '<C-x><C-o><C-n><C-p><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
+
+" Use Ctrl+Space for omni-completion
+" https://stackoverflow.com/questions/510503/ctrlspace-for-omni-and-keyword-completion-in-vim
+inoremap <expr> <C-Space> pumvisible() \|\| &omnifunc == '' ?
+  \ "\<lt>C-n>" :
+  \ "\<lt>C-x>\<lt>C-o><c-r>=pumvisible() ?" .
+  \ "\"\\<lt>c-n>\\<lt>c-p>\\<lt>c-n>\" :" .
+  \ "\" \\<lt>bs>\\<lt>C-n>\"\<CR>"
+imap <C-@> <C-Space>
+
+" Popup menu hightLight Group
+highlight Pmenu ctermbg=13 guibg=LightGray
+highlight PmenuSel ctermbg=7 guibg=DarkBlue guifg=White
+highlight PmenuSbar ctermbg=7 guibg=DarkGray
+highlight PmenuThumb guibg=Black
+
+" Enable global scope search
+let OmniCpp_GlobalScopeSearch = 1
+" Show function parameters
+let OmniCpp_ShowPrototypeInAbbr = 1
+" Show access information in pop-up menu
+let OmniCpp_ShowAccess = 1
+" Auto complete after '.'
+let OmniCpp_MayCompleteDot = 1
+" Auto complete after '->'
+let OmniCpp_MayCompleteArrow = 1
+" Auto complete after '::'
+let OmniCpp_MayCompleteScope = 0
+" Don't select first item in pop-up menu
+let OmniCpp_SelectFirstItem = 0
+
+
 
 
 
