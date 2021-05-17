@@ -10,10 +10,11 @@ packadd! tagbar
 packadd! vim-cpp-enhanced-highlight
 packadd! ctrlp.vim
 packadd! cobra
+packadd! vim-linux-coding-style
 
 "packadd! vim-lldb
-packadd! ultisnips
-packadd! vim-snippets
+"packadd! ultisnips
+"packadd! vim-snippets
 colorscheme cobra
 
 nnoremap <leader>ll :packadd vim-lldb<CR>
@@ -353,6 +354,10 @@ let OmniCpp_SelectFirstItem = 0
 
 
 
+fu g:KernelAddTags()
+ exe 'cscope add ~/OpenSource/linux'
+ exe 'set tags=./TAGS\ ~/OpenSource/linux'
+endfu
 
 
 
