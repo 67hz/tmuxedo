@@ -17,6 +17,7 @@ packadd! ultisnips
 packadd! vim-snippets
 colorscheme cobra
 
+nnoremap <leader>nu :call g:ToggleNu()<CR>
 nnoremap <leader>ll :packadd vim-lldb<CR>
 nnoremap <leader>y "*y<CR>
 
@@ -55,6 +56,16 @@ set statusline+=%y      " ft of file
 "let g:lldb_width = 5
 "let g:lldb_rows = 4
 let g:lldb_orientation = 1
+
+" Toggle numbers display
+fu g:ToggleNu()
+	if (&nu == 1)
+		set nonu
+	else
+		set nu
+	endif
+endfu
+
 
 fu g:StartYcm()
   packadd YouCompleteMe
@@ -291,9 +302,10 @@ nnoremap <C-x> :FindFile<space>
 "
 " C symbol
 map <leader>cs<space> :cs find<space>
+" find c symbol
 map <leader>cs :cs find s <C-R>=expand("<cword>")<CR><CR>
 "definition
-nnoremap <leader>cg :cs find g<space>
+nnoremap <leader>cg :cs find g <C-R>=expand("<cword>")<CR><CR>
 " functions called by this function
 nnoremap <leader>cd :cs find d <C-R>=expand("<cword>")<CR><CR>
 " functions calling this function
