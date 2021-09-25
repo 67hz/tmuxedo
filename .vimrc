@@ -29,10 +29,8 @@ nnoremap <leader>m :make <CR>
 " Don't show the intro message on startup
 set shortmess=I
 
-" set t_Co=256
-set mouse=a
-
-
+"set t_Co=256
+set mouse=""
 
 "set clipboard=unnamed
 
@@ -101,8 +99,7 @@ fu g:StartYcm()
 endfu
 
 
-" https://clang.llvm.org/docs/HowToSetupToolingForLLVM.html
-fu! ClangCheckImpl(cmd)
+fu! RunCmdAsSys(cmd, name)
   if &autowrite | wall | endif
   echo "Running " . a:cmd . " ..."
   let l:output = system(a:cmd)
@@ -112,21 +109,33 @@ fu! ClangCheckImpl(cmd)
   if v:shell_error != 0
     cc
   endif
-  let g:clang_check_last_cmd = a:cmd
-endfunction
+  let g:{a:name}_last_cmd = a:cmd
+endfu
 
+" https://clang.llvm.org/docs/HowToSetupToolingForLLVM.html
 function! ClangCheck()
   let l:filename = expand('%')
   if l:filename =~ '\.\(cpp\|cxx\|cc\|c\)$'
-    call ClangCheckImpl("clang-check " . l:filename)
+    call RunCmdAsSys("clang-check " . l:filename, "clang_check")
   elseif exists("g:clang_check_last_cmd")
-    call ClangCheckImpl(g:clang_check_last_cmd)
+    call RunCmdAsSys(g:clang_check_last_cmd, "clang_check")
   else
     echo "Can't detect file's compilation arguments and no previous clang-check invocation!"
   endif
 endfu
 
 nmap <silent> <F5> :call ClangCheck()<CR><CR>
+
+function! ClangFormat(style)
+  let l:filename = expand('%')
+  if l:filename =~ '\.\(h\|hpp\|cpp\|cxx\|cc\|c\)$'
+    call RunCmdAsSys("clang-format -i --style=". a:style . " " . l:filename, "clang_format")
+    edit!
+  endif
+endfu
+
+nmap <silent> <F12> :call ClangFormat("Microsoft")<CR><CR>
+nmap <silent> <F11> :call ClangFormat("GNU")<CR><CR>
 
 
 
@@ -182,7 +191,7 @@ nnoremap <leader>p "*p<CR>
 
 
 " Ignore these files
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip 
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip
 
 
 " only check a file when loaded or saved
