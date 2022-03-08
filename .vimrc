@@ -17,7 +17,8 @@ packadd! ultisnips
 packadd! vim-snippets
 colorscheme cobra
 
-nnoremap <leader>nu :call g:ToggleNu()<CR>
+nnoremap <leader>nu :set invnu<CR>
+
 nnoremap <leader>ll :packadd vim-lldb<CR>
 nnoremap <leader>y "*y<CR>
 
@@ -54,15 +55,6 @@ set statusline+=%y      " ft of file
 "let g:lldb_width = 5
 "let g:lldb_rows = 4
 let g:lldb_orientation = 1
-
-" Toggle numbers display
-fu g:ToggleNu()
-	if (&nu == 1)
-		set nonu
-	else
-		set nu
-	endif
-endfu
 
 
 fu g:StartYcm()
@@ -334,7 +326,7 @@ if has("cscope")
   set csto=0
   set cst
   set nocsverb
-  set csre
+  set nocsre
   " add any database in current directory
   if filereadable("cscope.out")
       cs add cscope.out
@@ -389,10 +381,10 @@ inoremap <expr> <C-Space> pumvisible() \|\| &omnifunc == '' ?
 imap <C-@> <C-Space>
 
 " Popup menu hightLight Group
-highlight Pmenu ctermbg=13 guibg=LightGray
-highlight PmenuSel ctermbg=7 guibg=DarkBlue guifg=White
-highlight PmenuSbar ctermbg=7 guibg=DarkGray
-highlight PmenuThumb guibg=Black
+"highlight Pmenu ctermbg=13 guibg=LightGray
+"highlight PmenuSel ctermbg=7 guibg=DarkBlue guifg=White
+"highlight PmenuSbar ctermbg=7 guibg=DarkGray
+"highlight PmenuThumb guibg=Black
 
 fu s:Omni()
 	" Enable global scope search
