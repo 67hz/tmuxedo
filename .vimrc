@@ -1,6 +1,6 @@
 set nocp
 syntax enable
-"set packpath+=$HOME/.vim/pack/
+"set packpath+=$HOME/.vim/pack/mine/opt
 
 " Debugging only
 "set verbose=1
@@ -9,18 +9,15 @@ syntax enable
 packadd! tagbar
 packadd! vim-cpp-enhanced-highlight
 packadd! ctrlp.vim
-packadd! cobra
 packadd! vim-linux-coding-style
 
 "packadd! vim-lldb
-"packadd! ultisnips
-"packadd! vim-snippets
+packadd! ultisnips
+packadd! vim-snippets
 colorscheme cobra
 
 nnoremap <leader>ll :packadd vim-lldb<CR>
 nnoremap <leader>y "*y<CR>
-
-nnoremap <leader>yy :call g:StartYcm()<CR>
 
 nnoremap <leader>m :make <CR>
 
@@ -32,8 +29,6 @@ set shortmess=I
 
 " set t_Co=256
 set mouse=a
-
-
 
 "set clipboard=unnamed
 
@@ -57,39 +52,13 @@ set statusline+=%y      " ft of file
 "let g:lldb_rows = 4
 let g:lldb_orientation = 1
 
-fu g:StartYcm()
-  packadd YouCompleteMe
-  " let clangd fully control code completion
-  let g:ycm_clangd_uses_ycmd_caching = 0
-  let g:ycm_clangd_binary_path = exepath("clangd")
-
-  let g:ycm_python_interpreter_path = '/usr/bin/python3'
-  let g:ycm_python_sys_path = ['system']
-  let g:ycm_extra_conf_vim_data = [
-    \ 'g:ycm_python_interpreter_path',
-    \ 'g:ycm_python_sys_path'
-    \]
-  let g:ycm_confirm_extra_conf = 0
-  let g:ycm_global_ycm_extra_conf = '~/global_ycm_extra_conf.py'
-
-  " close youcompleteme docs window after selection.  obviously.
-  let g:ycm_autoclose_preview_window_after_completion=1
-
-  let g:ycm_enable_diagnostic_signs=1
-
-  " collect identifiers from whole project instead of visited files only
-  let g:ycm_collect_identifiers_from_tags_files = 1
-
-  " YCM Shortcuts
-  nnoremap <Leader>gl :YcmCompleter GoToDeclaration<CR>
-  nnoremap <Leader>gf :YcmCompleter GoToDefinition<CR>
-  nnoremap <Leader>gr :YcmCompleter GoToDefinition<CR>
-  nnoremap <Leader>gt :YcmCompleter GetType<CR>
-  nnoremap <Leader>gd :YcmCompleter GetDoc<CR>
-  nnoremap <Leader>rr :YcmCompleter RefactorRename<space>
-  nnoremap <Leader>ft :YcmCompleter Format<CR>
-  nnoremap <Leader>fx :YcmCompleter FixIt<CR>
-endfu
+" LSP
+packadd vim-lsp
+"  packadd vim-lsp-settings
+packadd asyncomplete.vim
+packadd asyncomplete-lsp.vim
+packadd vim-lsp-snippets
+packadd vim-lsp-ultisnips
 
 
 
@@ -152,8 +121,6 @@ nnoremap  <silent> <s-tab>  :if &modifiable && !&readonly && &modified <CR> :wri
 
 set autoindent
 filetype plugin indent on
-
-
 set foldmethod=manual
 
 
@@ -161,7 +128,6 @@ set foldmethod=manual
 "
 " customize netrw
 "
-
 nnoremap <C-n> :Lex<CR>
 let g:netrw_banner=0
 let g:netrw_browse_split=4 "open in previous window
@@ -223,7 +189,7 @@ augroup filetype_cpp
     :autocmd FileType cpp vnoremap <buffer> <localleader>cm I/*<space><esc><s-a><space>*/<esc>
 
     :autocmd FileType c nnoremap <buffer> <localleader>cm I/*<space><esc><s-a><space>*/<esc>
-    :autocmd FileType cpp UltiSnipsAddFiletypes cpp_
+    ":autocmd FileType cpp UltiSnipsAddFiletypes cpp_
 augroup end
 
 " get better highlighting for json files
@@ -234,7 +200,7 @@ augroup END
 nnoremap <leader>sv :source $MYVIMRC<cr>
 nnoremap <leader>ev :vsplit $MYVIMRC<cr> <c-w><c-r>
 
-:iabbrev @@ aaron@avenue6creative.com
+:iabbrev @@ 67hz@protonmail.com
 
 
 " file search
@@ -258,7 +224,7 @@ nnoremap <C-x> :FindFile<space>
 " C symbol
 map <leader>cs :cs find s <C-R>=expand("<cword>")<CR><CR>
 "definition
-nnoremap <leader>cg :cs find g<space>
+nnoremap <leader>cg :cs find g<space><C-R>=expand("<cword>")<CR><CR>
 " functions called by this function
 nnoremap <leader>cd :cs find d <C-R>=expand("<cword>")<CR><CR>
 " functions calling this function
@@ -293,10 +259,10 @@ endif
 " snippets
 "
 " Ultisnips
-let g:UltiSnipsExpandTrigger="<c-l>"
-let g:UltiSnipsJumpForwardTrigger="<c-k>"
-let g:UltiSnipsJumpBackwardTrigger="<c-j>"
-nnoremap <leader>ur :call UltiSnips#RefreshSnippets()<Cr>
+"let g:UltiSnipsExpandTrigger="<c-l>"
+"let g:UltiSnipsJumpForwardTrigger="<c-k>"
+"let g:UltiSnipsJumpBackwardTrigger="<c-j>"
+"nnoremap <leader>ur :call UltiSnips#RefreshSnippets()<Cr>
 
 " Highlight trailing spaces
 " http://vim.wikia.com/wiki/Highlight_unwanted_spaces
@@ -310,57 +276,91 @@ autocmd BufWinLeave * call clearmatches()
 
 " Enable OmniCompletion
 " http://vim.wikia.com/wiki/Omni_completion
-filetype plugin on
-set omnifunc=syntaxcomplete#Complete
 
-" Configure menu behavior
-" http://vim.wikia.com/wiki/VimTip1386
-set completeopt=longest,menuone
-inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-inoremap <expr> <C-n> pumvisible() ? '<C-n>' :
-  \ '<C-n><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
-inoremap <expr> <M-,> pumvisible() ? '<C-n>' :
-  \ '<C-x><C-o><C-n><C-p><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
+if executable('clangd')
+    augroup lsp_clangd
+        autocmd!
+        autocmd User lsp_setup call lsp#register_server({
+                    \ 'name': 'clangd',
+                    \ 'cmd': {server_info->['clangd', '-background-index']},
+                    \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp'],
+                    \ })
+        autocmd FileType c,cpp,objc,objcpp setlocal omnifunc=lsp#complete
+"        autocmd FileType cpp setlocal omnifunc=lsp#complete
+"        autocmd FileType objc setlocal omnifunc=lsp#complete
+"        autocmd FileType objcpp setlocal omnifunc=lsp#complete
+    augroup end
+endif
 
-" Use Ctrl+Space for omni-completion
-" https://stackoverflow.com/questions/510503/ctrlspace-for-omni-and-keyword-completion-in-vim
-inoremap <expr> <C-Space> pumvisible() \|\| &omnifunc == '' ?
-  \ "\<lt>C-n>" :
-  \ "\<lt>C-x>\<lt>C-o><c-r>=pumvisible() ?" .
-  \ "\"\\<lt>c-n>\\<lt>c-p>\\<lt>c-n>\" :" .
-  \ "\" \\<lt>bs>\\<lt>C-n>\"\<CR>"
-imap <C-@> <C-Space>
+
+function! s:on_lsp_buffer_enabled() abort
+  setlocal omnifunc=lsp#complete
+  setlocal signcolumn=yes
+  if exists('+tagfunc') | setlocal tagfunc=lsp#tagfunc | endif
+  nmap <buffer> gd <plug>(lsp-definition)
+  nmap <buffer> gs <plug>(lsp-document-symbol-search)
+  nmap <buffer> gS <plug>(lsp-workspace-symbol-search)
+  nmap <buffer> gr <plug>(lsp-references)
+  nmap <buffer> gi <plug>(lsp-implementation)
+  nmap <buffer> gt <plug>(lsp-type-definition)
+  nmap <buffer> <leader>rn <plug>(lsp-rename)
+  nmap <buffer> [g <plug>(lsp-previous-diagnostic)
+  nmap <buffer> ]g <plug>(lsp-next-diagnostic)
+  nmap <buffer> K <plug>(lsp-hover)
+  nnoremap <buffer> <expr><c-f> lsp#scroll(+4)
+  nnoremap <buffer> <expr><c-d> lsp#scroll(-4)
+
+  let g:lsp_format_sync_timeout = 1000
+  autocmd! BufWritePre *.rs,*.go call execute('LspDocumentFormatSync')
+
+  " refer to doc to add more commands
+endfunction
+
+augroup lsp_install
+  au!
+  " call s:on_lsp_buffer_enabled only for languages that has the server registered.
+  autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
+augroup END
+
+noremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+inoremap <expr> <cr>    pumvisible() ? asyncomplete#close_popup() : "\<cr>"
+
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+
+"filetype plugin on
+"set omnifunc=syntaxcomplete#Complete
+"
+"" Configure menu behavior
+"" http://vim.wikia.com/wiki/VimTip1386
+"set completeopt=longest,menuone
+"inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+"inoremap <expr> <C-n> pumvisible() ? '<C-n>' :
+"  \ '<C-n><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
+"inoremap <expr> <M-,> pumvisible() ? '<C-n>' :
+"  \ '<C-x><C-o><C-n><C-p><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
+"
+"" Use Ctrl+Space for omni-completion
+"" https://stackoverflow.com/questions/510503/ctrlspace-for-omni-and-keyword-completion-in-vim
+"inoremap <expr> <C-Space> pumvisible() \|\| &omnifunc == '' ?
+"  \ "\<lt>C-n>" :
+"  \ "\<lt>C-x>\<lt>C-o><c-r>=pumvisible() ?" .
+"  \ "\"\\<lt>c-n>\\<lt>c-p>\\<lt>c-n>\" :" .
+"  \ "\" \\<lt>bs>\\<lt>C-n>\"\<CR>"
+"imap <C-@> <C-Space>
 
 " Popup menu hightLight Group
-highlight Pmenu ctermbg=13 guibg=LightGray
-highlight PmenuSel ctermbg=7 guibg=DarkBlue guifg=White
-highlight PmenuSbar ctermbg=7 guibg=DarkGray
-highlight PmenuThumb guibg=Black
-
-" Enable global scope search
-let OmniCpp_GlobalScopeSearch = 1
-" Show function parameters
-let OmniCpp_ShowPrototypeInAbbr = 1
-" Show access information in pop-up menu
-let OmniCpp_ShowAccess = 1
-" Auto complete after '.'
-let OmniCpp_MayCompleteDot = 1
-" Auto complete after '->'
-let OmniCpp_MayCompleteArrow = 1
-" Auto complete after '::'
-let OmniCpp_MayCompleteScope = 0
-" Don't select first item in pop-up menu
-let OmniCpp_SelectFirstItem = 0
-
-
+"highlight Pmenu ctermbg=13 guibg=LightGray
+"highlight PmenuSel ctermbg=7 guibg=DarkBlue guifg=White
+"highlight PmenuSbar ctermbg=7 guibg=DarkGray
+"highlight PmenuThumb guibg=Black
 
 fu g:KernelAddTags()
- exe 'cscope add ~/OpenSource/linux'
- exe 'set tags=./TAGS\ ~/OpenSource/linux'
+ exe 'cscope add /repos/linux'
+ exe 'set tags=./TAGS\ ~/repos/linux'
 endfu
-
-
-
 
 if has('syntax') && has('eval')
   packadd! matchit
