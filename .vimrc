@@ -9,7 +9,7 @@ syntax enable
 packadd! tagbar
 packadd! vim-cpp-enhanced-highlight
 packadd! ctrlp.vim
-packadd! vim-linux-coding-style
+
 
 "packadd! vim-lldb
 packadd! ultisnips
@@ -42,7 +42,8 @@ set laststatus=2
 set statusline=%f  " path to file
 set statusline+=/
 set statusline+=buf:
-set statusline+=%n  " buffer number
+set statusline+=%n:  " buffer number
+set statusline+=%c  " buffer number
 set statusline+=/    " separator
 set statusline+=%y      " ft of file
 
@@ -145,11 +146,9 @@ let g:netrw_liststyle=3
 :inoremap <c-d> <esc> ddi
 
 
-
-
-set tabstop=4
-set shiftwidth=4
-set expandtab " spaces for tabs
+"set tabstop=4
+"set shiftwidth=4
+"set expandtab " spaces for tabs
 
 
 if has("vms")
@@ -178,18 +177,13 @@ nnoremap <Leader>c :messages clear<Cr>
 nnoremap <Leader>db :packadd testdebug<Cr> :Termdebug<Cr>
 
 
-augroup filetype_vim
-    set tabstop=2
-    set shiftwidth=2
-    set expandtab " spaces for tabs
-augroup end
-
 augroup filetype_cpp
     " :autocmd FileType cpp setlocal comments-=:<space>*<space>
     :autocmd FileType cpp vnoremap <buffer> <localleader>cm I/*<space><esc><s-a><space>*/<esc>
 
     :autocmd FileType c nnoremap <buffer> <localleader>cm I/*<space><esc><s-a><space>*/<esc>
     ":autocmd FileType cpp UltiSnipsAddFiletypes cpp_
+    :autocmd BufRead,BufNewFile,BufEnter *.cpp,*.h,*.c,*.hpp set tabstop=2 shiftwidth=2 expandtab
 augroup end
 
 " get better highlighting for json files
@@ -309,6 +303,7 @@ function! s:on_lsp_buffer_enabled() abort
   nmap <buffer> K <plug>(lsp-hover)
   nnoremap <buffer> <expr><c-f> lsp#scroll(+4)
   nnoremap <buffer> <expr><c-d> lsp#scroll(-4)
+  nmap <buffer> <leader>le <plug>(lsp-document-diagnostics)
 
   let g:lsp_format_sync_timeout = 1000
   autocmd! BufWritePre *.rs,*.go call execute('LspDocumentFormatSync')
@@ -358,8 +353,9 @@ let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 "highlight PmenuThumb guibg=Black
 
 fu g:KernelAddTags()
- exe 'cscope add /repos/linux'
- exe 'set tags=./TAGS\ ~/repos/linux'
+ packadd! vim-linux-coding-style
+ exe 'cscope add /code/open_source/linux'
+ exe 'set tags=./TAGS\ /code/open_source/linux'
 endfu
 
 if has('syntax') && has('eval')
